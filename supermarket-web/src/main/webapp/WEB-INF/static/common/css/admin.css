@@ -1,0 +1,210 @@
+﻿html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background-color: white;
+}
+/* #2a3542 */
+.header{
+	height:7%;
+	background:white;
+	min-height:66px;
+}
+.brand{
+	padding:15px 0px 0px 80px 
+}
+.brand>a{
+	font-size:22px;
+	color:black;
+	font-family:'微软雅黑';
+}
+.header-search{
+	padding:15px 0px 0px 100px 
+}
+.header-search input{
+	border:solid 1px rgb(229, 230, 231);
+	border-radius:1px;
+	line-height:20px;
+	padding:6px 2px 6px 8px;
+	width:300px;
+}
+.header-btn-wrap{
+	padding:15px 20px 0px 0px;
+}
+.header-btn{
+	border:0;
+}
+
+.header-search button{
+	
+}
+
+
+.main-frame{
+	height:93%;
+}
+.left-frame,.rigth-frame{
+	height:100%;
+}
+
+.left-frame{
+width:14%;
+float:left;
+background:#2a3542;
+
+}
+.rigth-frame{
+width:86%;
+float:right;
+background-color: white;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #efeeee;
+  background-color: #f35f5f;
+}
+.footer {
+  height: 3%;
+  background-color: #35404d;
+  color: white;
+  line-height: 25px;
+}
+.nav-tabs {
+  display:block;
+  background-color: #2a3542;
+  padding:3px 0;
+}
+.nav-tabs > li {
+  min-width: 120px;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus,
+.nav-tabs > li > a {
+  padding: 8px 15px 8px 10px;
+  border: 0;
+  color: #efeeee;
+  outline: none;
+  color: white;
+  text-decoration: none;
+}
+.nav-tabs > li.active > a span,
+.nav-tabs > li.active > a:hover span,
+.nav-tabs > li.active > a:focus span,
+.nav-tabs > li > a:hover span,
+.nav-tabs > li > a:focus span,
+.nav-tabs > li > a span {
+  height: 20px;
+}
+.nav-tabs > li.active > a strong,
+.nav-tabs > li.active > a:hover strong,
+.nav-tabs > li.active > a:focus strong,
+.nav-tabs > li > a:hover strong,
+.nav-tabs > li > a:focus strong,
+.nav-tabs > li > a strong {
+  display: inline-block;
+  float: right;
+  margin-top: 2px;
+  color: #efeeee;
+  margin-right: -5px;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+  background-color: #f35f5f;
+}
+.nav-tabs > li > a {
+  background-color: #5f7289;
+}
+.tab-content > div {
+  margin:0 20px;
+  margin-top: 20px;
+}
+.tab-content > div > iframe {
+  height: 550px;
+}
+#dropmenu {
+  list-style-type: none;
+  padding: 0;
+}
+#dropmenu a {
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  color: #efeeee;
+  border-radius: 4px;
+  font-size: 14px;
+}
+#dropmenu em {
+  margin-right: 15px;
+  color: #efeeee;
+}
+#dropmenu > li.curmenu > a > em {
+  color: #f35f5f;
+}
+#dropmenu > li > a {
+  display: block;
+  padding: 13px 0;
+  padding-left: 30px;
+}
+#dropmenu > li > a:after {
+  content: "\002b";
+  display: inline-block;
+  float: right;
+  font-size: 18px;
+  margin-right: 20px;
+  font-weight: 900;
+}
+#dropmenu > li > ul {
+  display: none;
+  list-style-type: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+#dropmenu > li > ul > li {
+  text-align: left;
+  padding: 10px 0px 10px 60px;
+  border-radius: 5px;
+}
+#dropmenu > li > ul > li:hover {
+  background-color: #2a3542;
+}
+#dropmenu > li.curmenu {
+  color: #f35f5f;
+}
+#dropmenu > li.curmenu > a:after {
+  content: "\2212";
+}
+.curmenu {
+  background-color: #35404d;
+}
+
+#rightmenu {
+  position: absolute;
+  width: 120px;
+  font-size: 13px;
+  background-color: #2a3542;
+}
+#rightmenu li {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: white;
+}
+#rightmenu li b {
+  margin-right: 5px;
+  color: white;
+}
+#rightmenu li:hover {
+  background-color: #f35f5f;
+}
+#rightmenu .list-group-item{
+	background-color: #2a3542;
+}

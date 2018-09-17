@@ -1,0 +1,160 @@
+		var vue = new Vue({
+		el : '#content',
+		data : {
+			${classname} : {}
+		},
+		methods : {
+			addForm : function() {
+				vue.${classname} = {};
+				openForm("新增");
+			},
+			editForm : function() {
+				var $pk.attrname=getSelectedRow();
+				if ($pk.attrname != '') {
+					var url=transUrl("/${pathName}/info/");
+					$.get(url+ $pk.attrname, function (r) {
+						if(check(r)){
+						vue.${classname}=r.${classname};
+						openForm("修改信息");
+						}
+				    });
+					if(vue.${classname}==null){alert("网络错误")}
+				}
+				
+			},
+			details:function(){
+				var id = getSelectedRow();
+				if (id != '') {
+					var url = transUrl("/${pathName}/details/")+id;
+					$.get(url, function(r) {
+						if (check(r)) {
+							vue.${classname}= r.${classname};
+							openForm("查看详情",550,"detailswrap");
+						}
+					});
+				}
+			},
+			deleteData : function() {
+				var $pk.attrname = getSelectedRows();
+				if ($pk.attrname != '') {
+					confirm('确定要删除选中的记录？', function() {
+						var url=transUrl("/${pathName}/delete");
+						$.ajax({
+							type : "POST",
+							url : url,
+							contentType : "application/json",
+							data : JSON.stringify($pk.attrname),
+							success : function(r) {
+								if(check(r)){
+									vue.reload();
+									tips("删除成功");
+								}
+							},
+							error : function() {
+								alert("网络错误，请稍后重试");
+							}
+						});
+					});
+				}
+			},
+			saveOrUpdate : function() {
+				var url = vue.${classname}.${pk.attrname} == null ? transUrl("/${pathName}/save") : transUrl("/${pathName}/update");
+				$.ajax({
+					type : "POST",
+					url : url,
+					contentType : "application/json",
+					data : JSON.stringify(vue.${classname}),
+					success : function(r) {
+						if(check(r)){
+							vue.reload();
+							vue.$data.${classname}={};
+							closeForm();
+							tips("操作成功");
+						}
+					}
+				});
+			},
+			reload : function() {
+				var table=$("tr.selected").eq(0).closest("table");
+				table=table.length==0?$('#datatable'):table;
+				table.bootstrapTable('refresh', {query:{
+					searchField : $("#searchField").val(),
+					searchText : $("#searchText").val(),
+					startTime : "",
+					endTime : ""
+				},'silent': true});
+			},
+			timeQuery : function() {
+				$('#datatable').bootstrapTable('refresh', {query:{
+					searchField : "",
+					searchText : "",
+					startTime : $("#startTime").val(),
+					endTime : $("#endTime").val()
+				},'silent': true});
+			},
+			exportData : function(exportType) {
+				$('#datatable').tableExport({
+					type : exportType,
+					escape : 'false',
+					fileName : '${classname}'
+				})
+			}
+		}
+	});
+	$(function() {
+		var url=transUrl("/${pathName}/list");
+		var table = new BSTable("datatable", url,
+				initColumn());
+		table.init();
+		$("#modal-form").validate({
+			rules : {			
+#foreach($column in $columns)
+#if($column.attrname != $pk.columnName && $column.attrname != "createId" && $column.attrname != "updateId" && $column.attrname != "updateTime" && $column.attrname != "createTime"  && $column.attrname != "isDelete" )
+				${column.attrname} : {
+					required : true
+				}#if($velocityCount != $columns.size()),
+#end#end#end	
+			},
+			messages : {
+#foreach($column in $columns)
+#if($column.attrname != $pk.columnName && $column.attrname != "createId" && $column.attrname != "updateId" && $column.attrname != "updateTime" && $column.attrname != "createTime" && $column.attrname != "isDelete" )
+				${column.attrname} : {
+					required : "请填写${column.comments}"
+				}#if($velocityCount != $columns.size()),
+#end#end#end			
+			},
+			submitHandler : function(form) {
+				vue.saveOrUpdate();
+			},
+			errorPlacement : function(error, element) {
+				tipError(error, element);
+			}
+		});
+	});
+	var initColumn = function() {
+		return [ {
+			checkbox : true
+		}, 	{
+			title : '序号',
+			field : 'id',
+			align : 'left',
+			visible : true,
+			valign : 'middle',
+			formatter : function(value, row, index) {
+				return autoId("datatable", index);
+		}}, 
+#foreach($column in $columns)
+#if($column.attrname != $pk.columnName && $column.attrname != "createId" && $column.attrname != "updateId"  && $column.attrname != "isDelete" )
+			{
+			title : '${column.comments}',
+			field : '${column.attrname}',
+			align : 'left',
+			visible : true,
+			sortable:true,
+			valign : 'middle',
+			width:'15%',
+			formatter:function(value,row,index){
+				return overflowHidden(value,25);
+			}
+		}#if($velocityCount != $columns.size()),#end#end#end ];
+	};

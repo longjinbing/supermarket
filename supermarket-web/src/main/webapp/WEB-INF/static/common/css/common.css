@@ -1,0 +1,196 @@
+.small-title{
+	padding:10px 0 2px 8px;
+	font-size:14px;
+	font-family:'微软雅黑';
+}
+.title-wrap{
+	position:fixed;
+	width:100%;
+	height:40px;
+	top:0;
+	background:#66ccff;
+	color:white;
+	z-index:5;
+}
+.tip{
+	color: red;
+	font-size: 12px;
+	text-decoration: none;
+	line-height: 35px;
+	text-underline: none;
+	cursor: pointer;
+	outline: none;
+}
+.qrwrap{
+	width:300px;
+	height:340px;
+	text-align: center;
+}
+.qrwrap .qr{
+	width:200px;
+	height:200px;
+	margin:30px auto;
+	clear: both;
+}
+.scan-result{
+	color: red;
+	font-size: 10px;
+	text-decoration: none;
+	line-height: 35px;
+	text-underline: none;
+	cursor: pointer;
+	outline: none;
+}
+.tip:hover{
+	text-decoration: none;
+	text-underline: none;
+	cursor: pointer;
+	outline: none;
+}
+.title-wrap img{
+	position:absolute;
+	top:8px;
+	width:24px;
+	height:24px;
+}
+
+.title-wrap .prev-btn{
+	left:10px;
+	
+}
+
+.title-wrap .title{
+	position:absolute;
+	width:80%;
+	left:10%;
+	text-align:center;
+	line-height:40px;
+}
+
+.title-wrap .share-btn{
+	right:10px;
+}
+.section-content{
+	margin:0 10px 0 10px;
+}
+.btn-main{
+	background:#66ccff;
+	color:white;
+	margin:auto;
+}
+.bottom-tip{
+	color:black;
+	padding:30px 0 20px 0px;
+	text-align:center;
+}
+.section-title{
+	padding:12px 0 12px 8px;
+	font-size:14px;
+	font-family:'微软雅黑';
+	background:#66ccff;
+	color:white;
+}
+.alert-modal,.confirm-modal{
+top:30%;
+}
+.form-modal{
+	top:-20px;
+	margin-left:-20%;
+}
+.modal-backdrop{
+display:none;
+}
+.primary-color{
+	color:#66ccff;
+}
+.primary_bg_color{
+	background:#66ccff;
+}
+[v-cloak]{
+            display:none;
+                }
+.mobilewrap{
+	display:none;
+	width:365px;
+	margin:10px 10px 10px 10px;
+	overflow:hidden;
+}
+.formwrap{
+	display:none;
+	padding:30px 15px;
+}
+.detailswrap{
+	display:none;
+	padding:30px 15px;
+}
+.select-ztree{
+	position:absolute;
+	z-index:20;
+	width:91%;
+	background:white;
+	border:1px solid rgb(221, 221, 221);
+}
+.sub,.add{
+	cursor:pointer;
+	-webkit-touch-callout: none; 
+-webkit-user-select: none; 
+-khtml-user-select: none; 
+-moz-user-select: none; 
+-ms-user-select: none; 
+user-select: none; 
+}
+.sub:hover,.add:hover{
+	background:#ffffff;
+}
+.rolelist{
+	padding:30px 0px 50px 0px;
+}
+.btn-select{
+	background:rgb(240, 173, 78);
+	color:white;
+}
+.ztree-wrap{
+	border:1px solid rgb(221, 221, 221);;
+	height:100%;
+	margin-top:10px;
+	}
+span.number{
+	cursor:pointer;
+	text-decoration:none;
+}
+span.number:hover{
+	background:rgb(92, 184, 92);
+	color:white;
+}
+.searchTextWrap{
+		    display:inline-block;
+		    margin-right:80px;
+		    }
+.searchTextWrap .searchField{
+		    border:solid 1px rgb(229, 230, 231);
+		    border-radius:1px;
+		    line-height:20px;
+		    padding:6px 2px 6px 8px;
+		    }
+.searchTextWrap .searchText{
+		     border:solid 1px rgb(229, 230, 231);
+		     border-radius:1px;
+		     line-height:20px;
+		     padding:6px 2px 6px 8px;
+		     }
+.searchTimeWrap{
+		    display:inline-block;
+		    max-width:400px;
+		    }
+.searchTimeWrap .searchTime{
+	border:solid 1px rgb(229, 230, 231);
+	border-radius:1px;
+	line-height:20px;
+	width:120px;
+	padding:6px 2px 6px 8px;
+	font-size:14px;
+}
+
+.subTable{
+	width:80%;
+}

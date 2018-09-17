@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="lib/css :: css(~{::title},~{})" >
+<title>超市后台管理系统</title>
+<!--<link rel="stylesheet" th:href="@{/static/common/css/admin.css}">-->
+
+</head>
+<body>
+	<div id="mainApp">
+		<div class="header">
+			<div class="brand pull-left">
+				<a class="" href="#">超市后台管理系统</a>
+			</div>
+			<div class="header-search pull-left">
+			<form>
+				<input text="type" placeholder="关键字搜索" />
+				<button type="button" class="btn btn-default">搜索</button>
+			</form>
+			</div>
+			<div class="pull-right header-btn-wrap">
+				<div class="btn-group">
+				    <button type="button" class="btn btn-default  header-btn dropdown-toggle" data-toggle="dropdown">
+				    <span class="glyphicon glyphicon-bell text-danger"></span><span class="badge bg-danger" >50</span>
+				    </button>
+				    <ul class="dropdown-menu" role="menu">
+				        <li>
+				            <a  onclick='newtab("/admin/user.html","测试信息测试信息测试信息测试信息")'>测试信息</a>
+				        </li>
+				        <li>
+				            <a  onclick='newtab("http://www.baidu.com","测试信息测试信息测试信息测试信息")'>测试信息</a>
+				        </li>
+				    </ul>
+				</div>
+				<div class="btn-group">
+				    <button type="button" class="btn btn-default  header-btn dropdown-toggle" data-toggle="dropdown">帮助
+				        <span class="caret"></span>
+				    </button>
+				    <ul class="dropdown-menu" role="menu">
+				        <li>
+				            <a href="#">使用手册</a>
+				        </li>
+				        <li>
+				            <a href="#">疑难解答</a>
+				        </li>
+				        <li>
+				            <a href="#">联系管理员</a>
+				        </li>
+				        <li>
+				            <a href="#">投诉建议</a>
+				        </li>
+				    </ul>
+				</div>
+				<div class="btn-group">
+			    <button type="button" class="btn btn-default  header-btn dropdown-toggle" data-toggle="dropdown">欢迎您，<span id="username"><shiro:principal/></span>
+			        <span class="caret"></span>
+			    </button>
+			    <ul class="dropdown-menu" role="menu">
+			        <li>
+			            <a href="#">我的账户信息</a>
+			        </li>
+			        <li>
+			            <a href="#" @click="editPassForm">修改密码</a>
+			        </li>
+			        <li>
+			            <a @click="logout" href="#">安全退出</a>
+			        </li>
+			    </ul>
+			</div>
+			</div>
+		</div>
+		<div class="main-frame">
+			<div class="left-frame">
+				<ul id="dropmenu">
+					<menu-item :item="item" v-for="item in menuList"></menu-item>
+				</ul>
+			</div>
+			<div id="myTab" class="rigth-frame">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#m120" class="m120"
+						data-toggle="tab"> <span> 首页</span>
+					</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade active in" id="m120" style="">
+						<iframe style="width: 100%;" scrolling="auto" frameborder="0"
+							th:src="@{/admin/home.html}"></iframe>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="passmodal" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title text-center" >修改密码</h4>
+						</div>
+						<div class="modal-body">
+						<form class="form-horizontal" v-modal="editPass" id="pass-modal-form"
+								role="form">
+								<input type="hidden" class="form-control"
+											v-model="editPass.id" name="id" id="id"
+											placeholder="用户名">
+								<div class="form-group">
+									<label for="密码" class="col-sm-2 control-label">新密码</label>
+									<div class="col-sm-8">
+										<input type="password" class="form-control"
+											v-model="editPass.password" name="password"
+											placeholder="密码">
+									</div>
+									<div class="col-md-2"></div>
+								</div>
+								<div class="form-group">
+									<label for="密码" class="col-sm-2 control-label">重复密码</label>
+									<div class="col-sm-8">
+										<input type="password" class="form-control"
+											v-model="editPass.confirmpassword" name="confirmpassword" 
+											placeholder="密码">
+									</div>
+									<div class="col-md-2"></div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-7">
+										<button type="button" class="btn btn-success" @click="resetPassword">重置密码</button>
+										<button type="button" class="btn btn-default pull-right"
+											data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+								<div id="passerror" class="text-center"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	
+	<div th:include="lib/js :: js" ></div>
+</body>
+<script th:src="@{/static/common/js/admin.js}"></script>
+<link rel="stylesheet/less" type="text/css" th:href="@{/static/common/less/admin.less}">
+<script th:src="@{/static/common/less/less.js}"></script>
+<script type="text/javascript">
+	//生成菜单
+	var menuItem = Vue
+			.extend({
+				name : 'menu-item',
+				props : {
+					item : {}
+				},
+				template : [
+						'<li class="item">',
+						'<a v-if="item.parentId == 0"  href="javascript:void(0);" class="">',
+						'<em v-if="item.icon != null"  :class="item.icon"></em>{{item.name}}',
+						'</a>',
+						'<ul v-if="item.parentId == 0">',
+						'<menu-item :item="item" v-for="item in item.children"></menu-item>',
+						'</ul>',
+						'<a v-if="item.parentId != 0" :href="item.url" :MenuId="item.id" class="tabnav">',
+						'<em v-if="item.icon != null"  :class="item.icon"></em>{{item.name}}',
+						'</a>', '</li>' ].join('')
+			});
+	//注册菜单组件
+	Vue.component('menuItem', menuItem);
+	var vm = new Vue(
+			{
+				el : '#mainApp',
+				data : {
+					password : '',
+					newPassword : '',
+					menuList : {},
+					sysUser :{},
+					editPass:{}
+				},
+				methods : {
+					getMenuList : function(event) {
+						$.getJSON("[[@{/sysmenu/menulist}]]?_" + $.now(),
+								function(r) {
+									vm.menuList = r.menulist;
+								});
+					},
+					logout : function() {
+						confirm('您确定要安全退出本次登录吗？', function() {
+							setTimeout(function() {
+								window.location.href= transUrl("/account/logout?") + $.now();
+							}, 500);
+						});
+					},
+					editPassForm:function(){
+						vm.editPass.id=vm.sysUser.id;
+						$('#passmodal').modal('show');
+					},
+					getUser:function(){
+						var url=transUrl("/sysuser/userinfo/");
+						$.get(url+ $("#username").html(), function (r) {
+							vm.sysUser=r.sysUser;
+					    });
+					},
+					resetPassword:function(){
+						console.log(1)
+						if(vm.editPass.password==vm.editPass.confirmpassword&&vm.editPass.password.length>5){
+						var url=transUrl("/sysuser/resetpass?userId=")+vm.editPass.id+"&password="+vm.editPass.password+"&confirmpassword="+vm.editPass.confirmpassword;
+						console.log(2)
+						$.get(url, function (r) {
+							if (r.code === 0) {
+								alert("修改成功");
+								window.location.href=transUrl("/account/logout");
+							} else {
+								alert(r.msg);
+							}
+							$("#passerror").html("");
+							$('#passmodal').modal('hide');
+					    });
+						}else{
+							$("#passerror").html("密码有误，密码至少需要6位");
+						}
+					},
+					newtab:function(url,title){
+						title=title.length>6?title.substring(0,5)+"..":title;
+					    var myDate = new Date();
+					    var MenuId = ''+myDate.getMinutes()+''+myDate.getSeconds();
+					    var url ="[[@{/}]]"+url;
+					    if(window.top==window.self){
+					    	var tabNav = $("#myTab>ul:eq(0)");
+					        var tabContent = $("#myTab>div:eq(0)");
+					    }else{
+					    	var topdoc=$(window.top.document);
+					    	var tabNav =topdoc.find("#myTab>ul:eq(0)");
+					        var tabContent = topdoc.find("#myTab>div:eq(0)");
+					    }
+					    var index = tabNav.children("li.tab" + MenuId).index();
+					    var activeli = tabNav.children("li.active");
+					    var activediv = tabContent.children("div.active");
+					    var sumWidth = 0;
+					    tabNav.children().each(function () {
+					            sumWidth += $(this).width();
+					        })
+					    if (tabNav.width() < sumWidth+140) {
+					            alert("窗口数量达到最大，请关闭部分窗口后重新打开新窗口");
+					    } else {
+					       var pagetitle = '<li url="'+url+'" class="active tab' + MenuId + '"><a href="#tab' + MenuId + '" data-toggle="tab"><span>' + title + '</span><strong class="glyphicon glyphicon-remove"></strong></a></li>';
+					       var page = '<div class="tab-pane fade active in" id="tab' + MenuId + '"><iframe style=" min-height:' + tabContent.children("div").height()+'px;width:100%;" scrolling="auto" frameborder="0" src="' + url+ '"></iframe></div>';
+					       activeli.removeClass("active");
+					       activediv.removeClass("active in");
+					       tabNav.append(pagetitle);
+					       tabContent.append(page);
+					    }
+					}
+				},
+				created : function() {
+					this.getMenuList();
+					this.getUser();
+				}
+			});
+</script>
+</html>

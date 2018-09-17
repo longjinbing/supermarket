@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="templatelib/androidcss :: css(~{::title},~{})">
+<title>用户登录</title>
+</head>
+<body>
+	<div v-cloak id="main" class="main">
+		<header th:include="templatelib/androidcomponent :: header"></header>
+		<div class="content">
+		<div class="tips">身份验证无效，请重新验证</div>
+		</div>
+	</div>
+
+	<div th:include="templatelib/androidjs :: js"></div>
+	<script type="text/javascript">
+	var vue=new Vue({
+		el:'#main',
+		data:{
+			title : $("title").html()
+		},
+		created:function(){
+			if(isAndroid()){
+				window.location.href="js://webview?action=login";
+			}else{
+				window.location.href=transUrl("/android/login.html");
+			}
+		}
+	});
+	
+	</script>
+</body>
+
+</html>

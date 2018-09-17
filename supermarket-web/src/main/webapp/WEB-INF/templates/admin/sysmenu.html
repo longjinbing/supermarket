@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="lib/css :: css(~{::title},~{})">
+<title>菜单管理</title>
+</head>
+<body>
+	<div class="body-content">
+		<div id="content">
+			<div class="col-md-3">
+			<div class="ztree-wrap">
+				<h4 class="text:warning">菜单层次图：</h4>
+				<ul id="menu-tree" class="ztree"></ul>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div id="toolbar">
+					<button id="btn_add" shiro:hasPermission="sysmenu:save"
+						type="button" class="btn btn-success" @click="addForm">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增菜单
+					</button>
+					<button id="btn_delete" shiro:hasPermission="sysmenu:update"
+						type="button" class="btn btn-warning" @click="editForm">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>选择修改
+					</button>
+					<button id="btn_edit" shiro:hasPermission="sysmenu:delete"
+						type="button" class="btn btn-danger" @click="deleteData">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>选择删除
+					</button>
+					<button type="button" shiro:hasPermission="sysmenu:reset"
+						class="btn btn-danger" @click="refershMenu">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>菜单重置
+					</button>
+				</div>
+				<table id="datatable"></table>
+				<div id="formwrap" class="formwrap" style="display: none;">
+					<form class="form-horizontal" v-modal="sysMenu" id="modal-form"
+						role="form">
+						<div class="form-group">
+							<label for="菜单名称" class="col-sm-2 control-label">菜单名称</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" v-model="sysMenu.name"
+									name="name" id="name" placeholder="菜单名称">
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+						<div  class="form-group">
+							<label for="菜单URL" class="col-sm-2 control-label">菜单URL</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" v-model="sysMenu.url"
+									name="url" id="url" placeholder="如无url，填入#">
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+						<div  class="form-group">
+							<label for="授权(多个用逗号分隔，如：user:list,user:create)"
+								class="col-sm-2 control-label">授权</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" v-model="sysMenu.perms"
+									name="perms" id="perms"
+									placeholder="授权(如：user:list,user:create)">
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+						<div class="form-group">
+							<label for="菜单图标" class="col-sm-2 control-label">菜单图标</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" v-model="sysMenu.icon"
+									name="icon" id="icon" placeholder="菜单图标">
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+						<div class="form-group">
+							<label for="菜单名称" class="col-sm-2 control-label">状态</label>
+							<div class="col-sm-7">
+							<label class="inline-group">
+							<input value="1" v-model="sysMenu.status" name="status" type="radio" />启用
+							</label>
+							<label class="inline-group">
+							<input value="-1" v-model="sysMenu.status" name="status" type="radio" />禁用
+							</label>
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+						<div class="form-group">
+							<label for="排序" class="col-sm-2 control-label">排序</label>
+							<div class="col-sm-7">
+							<div class="input-group">
+								<input type="text" class="form-control orderNum"
+									v-model="sysMenu.orderNum" name="orderNum" id="orderNum"
+									placeholder="排序"></div>
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-7">
+								<button type="submit" class="btn btn-success">保存</button>
+								<input type="reset" class="btn btn-primary" value="重置" />
+								<button type="button"
+									class="btn btn-default pull-right layui-layer-close">关闭</button>
+							</div>
+						</div>
+						<div id="error" class="text-center"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="lib/js :: js"></div>
+	<div th:include="lib/ztree :: js"></div>
+</body>
+<script th:src="@{/static/admin/sysmenu.js}"></script>
+</html>

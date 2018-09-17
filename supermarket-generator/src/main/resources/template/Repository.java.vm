@@ -1,0 +1,17 @@
+package ${package}.repository;
+
+import ${package}.entity.${className};
+import com.ljb.jpa.ExpandJpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+/**
+ * ${comments}Repository
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Repository extends ExpandJpaRepository<${className},Integer>, JpaSpecificationExecutor<${className}> {
+
+}

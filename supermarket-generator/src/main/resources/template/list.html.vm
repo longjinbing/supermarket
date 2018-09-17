@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="lib/css :: css(~{::title},~{})" >
+<title>${comments}</title>
+</head>
+<body>
+	<div class="body-content">
+		<div id="content">
+			<div id="toolbar">
+				<div class="searchTextWrap">
+					<select id="searchField" class="searchField">
+#foreach($column in $columns)
+#if($column.attrname != $pk.columnName && $column.attrname != "createId" && $column.attrname != "updateId" && $column.attrname != "updateTime" && $column.attrname != "createTime" && $column.attrname != "orderNum" && $column.attrname != "status" && $column.attrname != "isDelete")	
+						<option value="$column.attrname">${column.comments}</option>
+#end
+#end
+					</select> <input class="searchText" id="searchText" type="text" placeholder="搜索">
+					<button type="button" @click="reload " class="btn btn-default">搜索</button>
+				</div>
+				<button shiro:hasPermission="${pathName}:save"
+					type="button" class="btn btn-success" @click="addForm">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+				</button>
+				<button shiro:hasPermission="${pathName}:update"
+					type="button" class="btn btn-warning" @click="editForm">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>选择修改
+				</button>
+				<button shiro:hasPermission="${pathName}:details"
+					type="button" class="btn btn-warning" @click="details">详情
+				</button>
+				<button  shiro:hasPermission="${pathName}:delete"
+					type="button" class="btn btn-danger" @click="deleteData">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>选择删除
+				</button>
+				<div class="btn-group" shiro:hasPermission="${pathName}:export">
+					<button type="button" class="btn btn-primary dropdown-toggle"
+						data-toggle="dropdown">
+						<span class="glyphicon glyphicon-share" aria-hidden="true"></span>导出数据
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a @click='exportData("excel")' href="#">导出为Excel</a></li>
+						<li><a @click='exportData("doc")' href="#">导出为WORD</a></li>
+					</ul>
+				</div>
+#foreach($column in $columns)
+#if($column.attrname == 'create_time')
+				<!-- <div class="searchTimeWrap">
+					<input id="startTime" class="searchTime"  placeholder="开始时间" type="date"/>&nbsp&nbsp—&nbsp&nbsp<input id="endTime" class="searchTime" placeholder="结束时间" type="date"/>
+					<button type="button" @click="timeQuery " class="btn btn-default">查找</button>
+				</div>-->
+#end#end
+			</div>
+			<table id="datatable"></table>
+			<div id="formwrap" class="formwrap">
+				<form class="form-horizontal" v-modal="${classname}" id="modal-form"
+					role="form">
+#foreach($column in $columns) 
+#if($column.attrname != $pk.columnName && $column.attrname != "createId" && $column.attrname != "updateId" && $column.attrname != "updateTime" && $column.attrname != "createTime" && $column.attrname != "isDelete" )
+					<div class="form-group">
+						<label for="${column.comments}" class="col-sm-2 control-label">${column.comments}</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control"
+								v-model="${classname}.${column.attrname}"
+								name="${column.attrname}" id="${column.attrname}"
+								placeholder="${column.comments}">
+						</div>
+						<div class="col-md-3"></div>
+					</div>
+#end 
+#end
+					<div class="form-group">
+						<div class="col-md-12 text-center">
+							<button type="submit" class="btn btn-success">保存</button>
+							<input type="reset" class="btn btn-primary" value="重置" />
+							<button type="button" class="btn btn-default pull-right  layui-layer-close">关闭</button>
+						</div>
+					</div>
+					<div id="error" class="text-center"></div>
+				</form>
+			</div>
+			<div id="detailswrap" class="detailswrap">
+#foreach($column in $columns) 
+#if($column.attrname != $pk.columnName)	
+#if($column.attrname == "createId" )
+					<div class="form-group">
+						<label for="${column.comments}" class="col-sm-3 control-label">${column.comments}：</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">{{${classname}.createName}}</p>
+						</div>
+					</div>
+#end
+#if($column.attrname == "updateId" )
+					<div class="form-group">
+						<label for="${column.comments}" class="col-sm-3 control-label">${column.comments}：</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">{{${classname}.updateName}}</p>
+						</div>
+					</div>
+#end
+#if($column.attrname != "updateId" && $column.attrname != "createId" && $column.attrname != "isDelete")
+					<div class="form-group">
+						<label for="${column.comments}" class="col-sm-3 control-label">${column.comments}：</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">{{${classname}.${column.attrname}}}</p>
+						</div>
+					</div>
+#end
+#end 
+#end
+			</div>
+		</div>
+	</div>
+	<div th:include="lib/js :: js" ></div>
+	<script th:src="@{/static/${module}/${className.toLowerCase()}.js}"></script>
+</body>
+</html>

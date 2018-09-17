@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="css(title,links)">
+<meta charset="UTF-8">
+<title th:replace="${title}"></title>
+<link rel="stylesheet" th:href="@{/static/lib/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/static/lib/bootstrap-table/bootstrap-table.min.css}">
+<link rel="stylesheet" th:href="@{/static/lib/layer/theme/default/layer.css}">
+<link rel="stylesheet" th:href="@{/static/common/css/common.css}">
+<th:block th:replace="${links}" />
+</head>
+<body>
+</body>
+</html>

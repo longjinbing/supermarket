@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="lib/css :: css(~{::title},~{})" >
+<title>服务器维护中</title>
+</head>
+<body>
+	<div id="main" class="main">
+		<header th:include="lib/androidcomponent :: header"></header>
+		<div class="content">
+			<h3 style="margin-top:50px;" class="text-center text-warning"></h3>
+			<div class="tips">服务器维护中，暂时无法提供服务</div>
+			<a style="margin-top:50px; width:30%; margin:auto;"  href="js://webview?action=goBack" class="btn-primary center-block">返回</a>
+		</div>
+	</div>
+	<div th:include="lib/js :: js" ></div>
+	<script>
+	var vue = new Vue({
+		el : '#main',
+		data : {
+			title : $("title").html(),
+			path : transUrl("")
+		},
+		created:function(){
+			setTimeout(function(){
+				window.location.href="js://webview?action=goBack";
+			},3000)
+		}
+	})
+</script>
+</body>
+</html>

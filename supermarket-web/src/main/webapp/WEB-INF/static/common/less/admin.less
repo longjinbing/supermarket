@@ -1,0 +1,214 @@
+@bg-color:#5cb85c;
+@second-bg-color:#4c9265;
+@three-bg-color:#fff;
+@color:black;
+@second-color:#eeeeee;
+
+html，body,.left-frame,.rigth-frame {
+  height: 100%;
+}
+.header{
+  height:7%;
+  background:#e1dbdb;
+  min-height:66px;
+}
+.brand{
+  padding:15px 0px 0px 80px
+}
+.brand>a{
+  font-size:22px;
+  color:#48aa67;
+  font-family:'微软雅黑';
+}
+.header-search{
+  padding:15px 0px 0px 100px
+}
+.header-search input{
+  border:solid 1px rgb(229, 230, 231);
+  border-radius:1px;
+  line-height:20px;
+  padding:6px 2px 6px 8px;
+  width:300px;
+}
+.header-btn-wrap{
+  padding:15px 20px 0px 0px;
+}
+.header-btn{
+  border:0;
+}
+
+.main-frame{
+  height:93%;
+  overflow: hidden;
+}
+.left-frame{
+  width:14%;
+  float:left;
+  background:@bg-color;
+}
+.rigth-frame{
+  width:86%;
+  float:right;
+}
+.footer {
+  height: 3%;
+  background-color: @second-bg-color;
+  color: white;
+  line-height: 25px;
+}
+
+
+.nav-tabs {
+  display:block;
+  background-color: @bg-color;
+  li{
+    min-width: 120px;
+    border-left: 1px solid @second-color;
+    a,a:hover,a:focus{
+      margin: 0;
+      border: 0;
+      outline: none;
+      text-decoration: none;
+      border-radius: 0;
+      span{
+        height: 20px;
+      }
+      strong{
+        display: inline-block;
+        float: right;
+        margin-top: 2px;
+        margin-right: -5px;
+        color: @color;
+      }
+    }
+    a{
+      color: @second-color;
+      background-color: @second-bg-color;
+      strong{
+        color: @second-color;
+      }
+    }
+    a:hover,a:focus{
+      color: @color;
+      background-color: @three-bg-color;
+    }
+  }
+  li.active{
+    a,a:hover,a:focus{
+      border: 0;
+      outline: none;
+      text-decoration: none;
+      background-color: @three-bg-color;
+      color: @color;
+      span{
+        height: 20px;
+      }
+      strong{
+        display: inline-block;
+        float: right;
+        margin-top: 2px;
+        margin-right: -5px;
+        color: @color;
+      }
+    }
+  }
+}
+
+.tab-content > div {
+  margin:20px 20px 0 20px;
+}
+.tab-content > div > iframe {
+  height: 550px;
+}
+
+
+#dropmenu {
+  list-style-type: none;
+  padding: 0;
+  li{
+    background: @second-bg-color;
+    border-bottom:1px solid @second-color;
+    a{
+      outline: none;
+      text-decoration: none;
+      cursor: pointer;
+      color: @second-color;
+      border-radius: 4px;
+      font-size: 14px;
+      display: block;
+      padding: 13px 0;
+      padding-left: 30px;
+      &:after{
+          content: "\002b";
+          display: inline-block;
+          float: right;
+          font-size: 16px;
+          margin-right: 20px;
+          font-weight: 900;
+      }
+    }
+    em{
+      margin-right: 15px;
+      color: @second-color;
+    }
+    ul{
+      display: none;
+      list-style-type: none;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0;
+      li{
+        text-align: left;
+        padding: 0 0 0 60px;
+        &:hover{
+          background-color: @bg-color;
+        }
+        a{
+          padding: 10px 0;
+        }
+      }
+    }
+  }
+  li.curmenu{
+    color: @three-bg-color;
+    a{
+      &:after{
+        content: "\2212";
+      }
+      em{
+        color: @three-bg-color;
+      }
+    }
+    ul{
+      a:after{
+        content: "";
+      }
+    }
+  }
+}
+
+.curmenu {
+  background-color: @second-bg-color;
+}
+
+#rightmenu {
+  position: absolute;
+  width: 120px;
+  font-size: 13px;
+  background-color: @bg-color;
+}
+#rightmenu li {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: white;
+}
+#rightmenu li b {
+  margin-right: 5px;
+  color: white;
+}
+#rightmenu li:hover {
+  background-color: @second-bg-color;
+}
+#rightmenu .list-group-item{
+  background-color: @bg-color;
+}

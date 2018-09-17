@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head th:include="lib/css :: css(~{::title},~{})">
+    <title>结算系统</title>
+</head>
+<body>
+<style>
+    body, html, #mainApp, .goods, .pay {
+        height: 100%;
+    }
+
+    .head {
+        height: 7%;
+    }
+
+    .order-title{
+        padding: 10px  10px 10px 50px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .main-frame {
+        height: 93%;
+    }
+    .pay{
+        background: #f6f6f6;
+    }
+    .goods {
+        background: #e1e1e1;
+        position: relative;
+    }
+    .order-bg{
+        width: 400px;
+        height: 200px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -100px;
+        margin-left: -200px;
+        text-align: center;
+    }
+    .order-bg>p:first-child{
+        font-size: 50px;
+        color: #CDD1D4;
+    }
+    .order-bg>p:last-child{
+        font-size: 20px;
+        color: #CDD1D4;
+    }
+
+    .goods-item {
+        background: white;
+        height: 110px;
+        padding: 20px 20px 20px 50px;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+    .goods-item-desc {
+        margin-bottom: 20px;
+    }
+
+    .goods-item-desc > span > b, .goods-item-details > span > b {
+        font-family: 微软雅黑;
+        font-size: 14px;
+        line-height: 25px;
+        font-weight: 100;
+        display: inline-block;
+        vertical-align: middle;
+        width: 80px;
+        text-align: right;
+    }
+
+    .goods-item-desc > span > small, .goods-item-details > span > small {
+        font-family: 微软雅黑;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 25px;
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 20px;
+    }
+
+    .goods-item-desc > span {
+        display: inline-block;
+        width: 45%;
+    }
+
+    .goods-item-details > span {
+        display: inline-block;
+        width: 45%;
+        font-size: 14px;
+    }
+
+    .delete-goods {
+        background: #00a0e9;
+        color: white;
+        text-align: center;
+        height: 70px;
+        width: 70px;
+        line-height: 70px;
+        border-radius: 5px;
+        margin: auto;
+        cursor: pointer;
+    }
+    .delete-goods:hover{
+        background: #3399c8;
+         }
+    .display-sumprice{
+        display: block;
+        width:200px;
+        height: 200px;
+        border-radius: 100px;
+        margin: auto;
+        font-size: 40px;
+        text-align: center;
+        color: white;
+        background: #00b7ee;
+        cursor: pointer;
+        padding-top: 50px;
+    }
+    .display-sumprice>span:first-child{
+        font-size: 14px;
+    }
+    .display-sumprice>span{
+        display: block;
+    }
+    .pay-method{
+        display: block;
+        width:100px;
+        height: 100px;
+        border-radius: 50px;
+        margin: auto;
+        text-align: center;
+        line-height: 100px;
+        color: white;
+        background: #e08466;
+        margin:50px auto 0 auto;
+        cursor: pointer;
+    }
+    .pay-complete{
+        display: block;
+        width:200px;
+        height:40px;
+        line-height: 40px;
+        text-align: center;
+        color: white;
+        background: #1E9FFF;
+        margin: 50px auto 0 auto;
+        cursor: pointer;
+    }
+</style>
+<div id="mainApp">
+    <div class="header">
+        <div class="brand pull-left">
+            <a class="" href="#">商品结算系统</a>
+        </div>
+        <div class="pull-right header-btn-wrap">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default  header-btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-bell text-danger"></span><span class="badge bg-danger">50</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a onclick='newtab("/admin/user.html","测试信息测试信息测试信息测试信息")'>测试信息</a>
+                    </li>
+                    <li>
+                        <a onclick='newtab("http://www.baidu.com","测试信息测试信息测试信息测试信息")'>测试信息</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default  header-btn dropdown-toggle" data-toggle="dropdown">帮助
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">使用手册</a>
+                    </li>
+                    <li>
+                        <a href="#">疑难解答</a>
+                    </li>
+                    <li>
+                        <a href="#">联系管理员</a>
+                    </li>
+                    <li>
+                        <a href="#">投诉建议</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default  header-btn dropdown-toggle" data-toggle="dropdown">
+                    欢迎您，<span id="username"><shiro:principal/></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">我的账户信息</a>
+                    </li>
+                    <li>
+                        <a href="#" @click="editPassForm">修改密码</a>
+                    </li>
+                    <li>
+                        <a @click="logout" href="#">安全退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main-frame">
+
+        <div class="col-md-9 goods">
+            <div class="order-bg"><p>超市收银系统</p><p>请使用终端扫码添加商品</p></div>
+            <p class="order-title">商品列表<span style="padding-left: 60px;font-size: 14px; vertical-align: middle;color: red;" onclick='openqr("/store/scan/2")'>使用终端扫描(二维码)</span></p>
+            <div class="col-md-12">
+                <div v-for="(index,item) in goodsList" class="goods-item">
+                    <div class="col-md-8">
+                        <div class="goods-item-desc">
+                          {{index+1}} <span><b>商品名:</b><small>{{item.goodsName}}</small></span>
+                            <span><b>单价:</b><small class="text-danger">{{item.price}}</small></span>
+                        </div>
+                        <div class="goods-item-details">
+                            <span><b>类别:</b><small>{{item.category}}</small></span>
+                            <span><b>库存:</b><small v-if="item.number > 0">充足</small><small class="text-danger" v-if="item.number === 0">库存不足，此商品可能未入库，请检查</small></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-md-6">
+                        <div class="input-group" style="margin-top:15px;">
+                            <span class="input-group-addon sub" @click="sub(index,item.id)" >-</span><input
+                                class="form-control orderNum text-center valid" v-model="item.number" name="orderNum" id="orderNum"
+                                placeholder="数量" type="text"><span
+                                class="input-group-addon add" @click="add(index,item.id)" >+</span>
+                        </div>
+                        </div>
+                        <div class="col-md-6">
+                        <p @click="delete(index,item.id)" class="delete-goods">删除</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 pay">
+            <p class="order-title">支付板块</p>
+            <div class="col-md-12">
+                <p class="display-sumprice"><span>金额</span><span>{{sumPrice}}</span></p>
+                <div style="height: 250px;">
+                    <div class="col-md-6">
+                        <p class="pay-method">现金支付</p>
+                    </div>
+                    <div class="col-md-6">
+                <p class="pay-method">支付宝</p>
+                    </div>
+                </div>
+                <p @click="complate()" class="pay-complete">结算完成</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="lib/js :: js"></div>
+</body>
+<script th:src="@{/static/common/js/admin.js}"></script>
+<script th:src="@{/static/lib/qrcodejs/qrcodejs-master/qrcode.min.js}"></script>
+<link rel="stylesheet/less" type="text/css" th:href="@{/static/common/less/admin.less}">
+<script th:src="@{/static/common/less/less.js}"></script>
+<script type="text/javascript">
+    var vue = new Vue({
+        el: '#mainApp',
+        data: {
+            goodsList: [],
+            sumPrice:0
+        },
+        methods: {
+            logout: function () {
+                confirm('您确定要安全退出本次登录吗？', function () {
+                    setTimeout(function () {
+                        window.location.href = transUrl("/account/logout?") + $.now();
+                    }, 500);
+                });
+            },
+            sub : function(index,id) {
+                var cur = vue.$data.goodsList[index].number;
+                console.log(cur)
+                if (cur > 1) {
+                    var url = transUrl("/storecart/number?i=-1&id=") + id;
+                    $.get(url, function(r) {
+                        if (check(r)) {
+                            vue.$data.goodsList[index].number = cur - 1;
+                        }
+                    });
+                }
+            },
+            add : function(index,id) {
+                var cur = vue.$data.goodsList[index].number;
+                vue.$data.goodsList[index].number = cur + 1;
+                var url = transUrl("/storecart/number?i=1&id=") + id;
+                $.get(url, function(r) {
+                    if (check(r)) {
+                        vue.$data.goodsList[index].number = cur + 1;
+                    }
+                });
+            },
+            delete:function(index,id){
+                var arr=[];
+                arr.push(id);
+                $.ajax({
+                    type: "POST",
+                    url:transUrl( '/storecart/delete'),
+                    contentType : "application/json",
+                    data : JSON.stringify(arr),
+                    success: function (r) {
+                        vue.$data.goodsList.splice(index,1);
+                    },
+                    error: function () {
+                        $("#result_strip").html('<p class="scan-error">网络错误，请检测网络</p>');
+                    }
+                })
+            },
+            initscan: function () {
+                var load = function () {
+                    $.ajax({
+                        type: "POST",
+                        url: transUrl('/storecart/query/2'),
+                        data: {},
+                        contentType: "application/x-www-form-urlencoded",
+                        success: function (r) {
+                            if (r.data != undefined) {
+                                vue.$data.goodsList = r.data;
+                            }
+                            var timer = setTimeout(function () {
+                                load();
+                            }, 3000);
+                        },
+                        error: function () {
+                            $("#result_strip").html('<p class="scan-error">网络错误，请检测网络</p>');
+                        }
+                    })
+                }
+                load();
+            },
+            complate:function(){
+                var arr=[];
+                $.each(vue.goodsList,function(index,item){
+                    arr.push(item.id);
+                    $.ajax({
+                        type: "POST",
+                        url: transUrl('/storecart/order'),
+                        contentType : "application/json",
+                        data : JSON.stringify(arr),
+                        success: function (r) {
+                            if(check(r)) {
+                                vue.$data.goodsList = [];
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    })
+                });
+            },
+            getUser: function () {
+                var url = transUrl("/sysuser/userinfo/");
+                $.get(url + $("#username").html(), function (r) {
+                    vm.sysUser = r.sysUser;
+                });
+            }
+        },
+        created: function () {
+            this.initscan();
+            this.getUser();
+
+        },
+        watch : {
+           goodsList : {
+                handler : function(newVal) {
+                    vue.$data.sumPrice = 0;
+                    $.each(vue.$data.goodsList, function(index, item) {
+                        vue.$data.sumPrice += item.number * item.price;
+                    });
+                },
+                deep : true
+            }
+        }
+    });
+</script>
+</html>

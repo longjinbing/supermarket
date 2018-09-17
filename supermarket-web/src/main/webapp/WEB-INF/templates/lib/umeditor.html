@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="js">
+<link rel="stylesheet" th:href="@{/static/lib/umeditor/themes/default/css/umeditor.min.css}">
+<script type="text/javascript" charset="utf-8" th:src="@{/static/lib/umeditor/umeditor.config.js}"></script>
+   <script type="text/javascript" charset="utf-8" th:src="@{/static/lib/umeditor/umeditor.min.js}"> </script>
+   <script type="text/javascript" charset="utf-8" th:src="@{/static/lib/umeditor/lang/zh-cn/zh-cn.js}"></script>
+</div>
+</body>
+</html>

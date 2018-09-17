@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="lib/css :: css(~{::title},~{})" >
+<title>代码生成</title>
+</head>
+<body>
+	<div class="body-content">
+		<div id="content">
+			<div id="toolbar">
+				<div class="searchTextWrap">
+					<select id="searchField" class="searchField">
+						<option value="item">模块名称</option>
+					</select> <input class="searchText" id="searchText" type="text"
+						placeholder="">
+					<button type="button" @click="autoCode" class="btn btn-success">代码生成</button>
+				</div>
+			</div>
+			<table id="datatable"></table>
+
+			</div>
+		</div>
+	</div>
+	<div th:include="lib/js :: js" ></div>
+</body>
+<script>
+var vue=new Vue({
+	el:'#content',
+	data:{
+		ids:[],
+		modalTitle:""
+	},
+	methods:{
+		autoCode:function(){
+            var rows = $("#datatable").bootstrapTable('getSelections', function (row) {
+                return row;
+            });
+			if(rows.length>0){
+				var tableNames=[];
+            	$.each(rows,function(index,value){
+            		tableNames[index]=value.tableName;
+            	})
+            	toUrl("[[@{/generator/generatrorcode}]]"+"?tables="+JSON.stringify(tableNames)+"&moduleName="+$("#searchText").val())
+            }else{
+                alert("请输入模块名称");
+            }
+		},
+		reload:function(){
+			$('#'+this.tableId).bootstrapTable('refresh', {silent: true});
+		}
+	}
+});
+$(function () {
+    var table = new BSTable("datatable", "/generator/tablelist", initColumn());
+    table.init();
+})
+var initColumn = function () {
+    return [
+        {checkbox: true},
+        {
+            title: '序号',
+            field: 'id',
+            align: 'left',
+            visible: true,
+            valign: 'middle',
+            formatter: function (value, row, index) {
+                return autoId("datatable", index);
+            }
+        },
+        {title: '表名', field: 'tableName', align: 'left', visible: true, valign: 'middle', sortable: true},
+        {title: '表注释', field: 'tableComment', align: 'left', visible: true, valign: 'middle', sortable: true},
+        {title: '建立时间', field: 'createTime', align: 'left', visible: true, valign: 'middle', sortable: true},
+        {title: '引擎', field: 'engine', align: 'left', visible: true, valign: 'middle', sortable: true}
+    ];
+};
+</script>
+</html>
